@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <title>{% block title %} WatchAnime {% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="http://vjs.zencdn.net/5.15.1/video-js.css">
+
+</head>
+
+<body>
+    <div class="panel1">
+        <ul>
+            <li><a href="{{ url_for('main')}}">WatchAnime</a></li>
+            <li><a href="{{url_for('top100')}}">Топ 100 Аниме</a></li>
+            <li><a href="#">Каталог</a></li>
+        </ul>
+        <form action="" method="post">
+            {{ search.csrf_token }}
+            <div>
+                <div style = "display:flex; align-items: center; padding-right: 150px;">
+                    {{ search.text() }}
+                    <div onclick="showFilter()" style = "margin-left: 20px;">Фильтры</div>
+                </div>
+                <div class = "filters hidden" id = "filters">
+                    <h3>Жанры</h3>
+                    {{search.ganre()}}
+                    <h3>Тип</h3>
+                    {{search.type()}}
+                    <h3>Тип озвучки</h3>
+                    <select class="Selector">
+                        <option value="value1">Anilibria</option>
+                        <option value="value2" selected>Ancord</option>
+                        <option value="value3">Studio Band</option>
+                    </select>
+                    <h3>Статус</h3>
+                    {{search.status()}}
+                    <h3>Возрастное ограничение</h1>
+                    {{search.agerate()}}
+                </div>
+                <script>
+
+                    function showFilter() {
+
+                        var filters = document.getElementById("filters");
+                        filters.classList.toggle('hidden');
+
+                    }
+
+                </script>
+            </div>
+        </form>
+        {% if not current_user.is_authenticated %}
+        <ul>
+            <li><a href="{{ url_for('reg')}}">Зарегестрироваться</a></li>
+            <li><a href="{{ url_for('log')}}">Войти</a></li>
+        </ul>
+        {% else %}
+        <ul>
+            <li><a href="#">{{ current_user.username }}</a></li>
+            <li><a href="{{url_for('logout')}}">Выйти</a></li>
+        </ul>
+        {% endif %}
+    </div>
+    {% block container %}
+    <div class="MainContainer">
+        {% block content %}
+        {% endblock %}
+        <div class="Fuuter">
+            <p>Сайт WatchAnime - является Дипломной работой студента групы КП-191 Хорошева Михаила.
+            </p>
+            <p>Дополнительной целью является распостранение культуры японской анимации.</p>
+            <p id="Original">
+                ©WatchAnime 2022
+            </p>
+        </div>
+    </div>
+    {% endblock %}
+
+</body>

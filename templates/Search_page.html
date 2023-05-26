@@ -1,0 +1,48 @@
+{% extends "Base.html" %} 
+{% block content %}
+    <div class="containerFlex" id="MainPageAbout">
+        <div id="MainPageOngoing">
+            <div class="Title">Онгоинги</div>
+            {% for x in Ongoing  %}
+            <div class="MainPageAnime">
+                <img src="{{x.image}}">
+                <ul id="AnimeList">
+                    <li><a href="{{ url_for('detail_anime', id=x.id) }}">{{x.name}}</a></li>
+                    <li>{{x.getType.name}}, {{x.date}}</li>
+                    <li>Серий: {{x.seriesCount}}</li>
+                    <li>Оценка: {{x.getAvg}}/10</li>
+                </ul>
+            </div>
+            {% endfor %}
+            <div class="More">
+                <a href="#">Больше</a>
+            </div>
+        </div>
+        <div id="MainPageAnimeAll">
+            <div class="Title">Завершённые Аниме</div>
+            {% for x in searchResult  %}
+            <div class="MainPageAnime">
+                <img src="{{x.image}}"
+                    id="AllAnimeImage">
+                <ul id="AnimeList">
+                    <li><a href="{{ url_for('detail_anime', id=x.id) }}">{{x.name}}</a></li>
+                    <li class="AltName">{{x.altName}}</li>
+                    <li><span><a href="#">{{x.getType.name}}</a></span> / <span><a href="#">{{x.date}}</a></span> / 
+                        {% for Genre in x.getGenre  %}
+                        <span><a href="#">{{Genre.name}}</a></span>
+                        {% endfor %}
+                    </li>
+                        <li>Серий: {{x.seriesCount}}</li>
+                        <li>Оценка: {{x.getAvg}}/10</li>
+                    <li>
+                        <p class="description">{{x.description}}</p>
+                    </li>
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+        <div id="Advestising">
+            <p style = "margin: auto;">ЗДЕСЬ МОГЛА БЫТЬ<br>ВАША РЕКЛАМА</p>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "db init",
+            "type": "shell",
+            "command": "flask db init"
+        },
+        {
+            "label": "db stamp",
+            "type": "shell",
+            "command": [
+                "flask db stamp head"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "db migrate",
+            "type": "shell",
+            "command": [
+                "flask db migrate;",
+                "flask db upgrade"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "db upgrade",
+            "type": "shell",
+            "command": [
+                "flask db upgrade"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

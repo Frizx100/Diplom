@@ -1,0 +1,148 @@
+{% extends "Base.html" %}
+{% block content %}
+
+
+<div class="containerFlex" id="MainPageAbout">
+    <div class="AnimePage">
+        <img class="AnimePageImage" src="{{anime.image}}">
+        <ul id="AnimeList">
+            <li>
+                <h2>{{anime.name}} </h2>
+            </li>
+            <li class="AltName" class="AnimePageList">
+                <h2>{{anime.altName}}</h2>
+            </li>
+            <li class="AnimePageList"><span>{{anime.getType.name}}</span> / <span>{{anime.date}}</span> /
+                {% for Genre in anime.getGenre %}
+                <span><a href="#">{{Genre.name}}</a></span>
+                {% endfor %}
+            <li class="AnimePageList">
+                Статус: {{anime.getStatus.name}}
+            </li>
+            </li>
+            <li class="AnimePageList"><a>Серий: {{anime.seriesCount}}</a></li>
+            <li class="AnimePageList">
+                Оценка: {{anime.getAvg}}/10
+            </li>
+            <li>
+                {%for part in anime.getDescriptionFormated%}
+                <p class="fullDescription">{{part|safe}}</p>
+                {%endfor%}
+                {%if anime.getSeries%}
+                <div class="player_container">
+                    <div class="containerFlex">
+                        {% for x in anime.getSeries %}
+                        <div class="anime_button" path="{{ url_for('static', filename= x.path) }}"
+                            onclick="change_video(this)">
+                            {{x.number}}
+                        </div>
+                        {%endfor%}
+                    </div>
+
+                    <video class="video-js vjs-default-skin" id="video-1" src="" type="video/mp4"></video>
+                    <script src="http://vjs.zencdn.net/5.15.1/video.js"></script>
+                    <script src="//cdn.sc.gl/videojs-hotkeys/latest/videojs.hotkeys.min.js"></script>
+                    <script src="https://raw.githubusercontent.com/phloxic/videojs-sprite-thumbnails/master/src/sprite-thumbnails.js"></script>
+                    <script type='text/javascript'>
+                        function create_player() {
+                            var video = videojs("video-1", {
+
+                                autoplay: false,
+                                preload: true,
+                                controls: true,
+                                aspectRatio: '16:9',
+                                playbackRates: [0.7, 1, 1.15, 1.25, 1.5, 2]
+
+                            }, function (){
+                                this.initialPreviewThumbnail({
+                                    sprite_url: './output-180x120-thumb.jpg',
+                                    second: 6,
+                                    sprite_x_count: 15,
+                                    thumbnail_width: 180,
+                                    thumbnail_height: 120,
+                                    preview_window_border_size: 2,
+                                    preview_window_border_color: 'green'
+                                });
+                             });
+                            video.ready(function () {
+                                this.hotkeys({
+                                    volumeStep: 0.1,
+                                    seekStep: 5,
+                                    enableModifiersForNumbers: true,
+                                    alwaysCaptureHotkeys: true,
+                                });
+                            });
+                            return video;
+                        }
+
+                        function change_video(element) {
+                            var video = create_player();
+                            console.log(element.getAttribute("path"));
+                            video.src(element.getAttribute("path"));
+
+                        }
+                    </script>
+                </div>
+                {%else%}
+                <p>{{anime.message}}
+
+                </p>
+                {%endif%}
+                <div class="comment"> {%if not review%}
+                    <form action="" method="post">
+                        {{ form.csrf_token }}
+                        <div>
+                            {{ form.text.label() }}
+                            <br>
+                            {{ form.text() }}
+                            <br>
+                            {{ form.grade.label() }}
+                            <br>
+                            {{ form.grade() }}
+                            <br>
+                            <br>
+                            {{ form.submit() }}
+                        </div>
+                    </form>
+                    {%endif%}
+                </div>
+            </li>
+        </ul>
+
+    </div>
+
+
+
+
+    <div id="AnimePage">
+        <div class="Title">Онгоинги</div>
+        {% for x in Ongoing %}
+        <div class="AnimePageOngoing">
+            <img src="{{x.image}}">
+            <ul id="AnimeList">
+                <li><a href="{{ url_for('detail_anime', id=x.id) }}">{{x.name}}</a></li>
+                <li>{{x.getType.name}}, {{x.date}}</li>
+                <li>Серий: {{x.seriesCount}}</li>
+            </ul>
+        </div>
+        {% endfor %}
+        <div class="More">
+            <a href="#">Больше</a>
+        </div>
+    </div>
+</div>
+<div class="BoxShadow">
+    {%for review_item in anime.getReviews%}
+
+    <div class="containerFlex" id="comment">
+        <div style="background-image: url({{review_item.getAuthor.avatar}})" class="userAvatar"></div>
+        <div>
+            <p>{{review_item.getAuthor.username}}</p>
+            <p>{{review_item.text}}</p>
+            <p>{{review_item.date.strftime("%m/%d/%Y, %H:%M:%S")}}</p>
+        </div>
+    </div>
+
+    {%endfor%}
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "Base.html" %}
+{% block title %}Registration{% endblock %}
+{% block content %}
+<div class = "reg">
+    <form action="" method="post">
+        {{ form.csrf_token }}   
+        {% for field in form if field.name != 'csrf_token' %}
+            <div>
+                {{ field.label() }}
+                <br>
+                {{ field() }}
+                
+                {% for error in field.errors %}
+                    <div class="error">{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% endfor %} 
+    </form>
+</div>
+{% endblock %}

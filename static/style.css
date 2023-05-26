@@ -1,0 +1,381 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+body {
+  background: url(https://oir.mobi/uploads/posts/2021-03/1616370468_50-p-peizazhi-iz-anime-59.jpg);
+  padding: 0;
+  margin: 0;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  color: #fff;
+  font-family: 'Roboto', sans-serif !important;
+
+}
+.reg{
+width: 200px !important;
+}
+
+label[for="submit"]{
+  display: none;
+}
+
+#remember{
+  margin: 5px !important;
+  width: 10px !important;
+}
+
+.player_container {
+  margin-left: -220px;
+  padding: 20px;
+}
+
+.anime_button:not(:last-child) {
+  border-right: 1px solid #292929;
+}
+
+.anime_button {
+
+  padding: 10px;
+  width: fit-content;
+  background: #484848;
+}
+
+
+
+.anime_button:hover {
+  color: rgb(255, 0, 221) !important;
+  transition: 0.5s;
+  box-shadow: 0 0 10px rgb(0 0 0 / 77%);
+}
+
+.video-js {
+  width: -webkit-fill-available;
+  height: auto;
+
+}
+
+.video-js .vjs-big-play-button {
+  transform: translate(-50%, -50%) !important;
+  top: 50% !important;
+  left: 50% !important;
+}
+
+.BoxShadow{
+
+  width: -webkit-fill-available;
+  height: fit-content;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.767);
+  padding: 10px;
+  
+}
+
+
+.comment{
+  margin-left: -180px;
+}
+
+textarea#text{
+  width: 530px;
+  height: 56px;
+  color: white;
+  background-color: #181717;
+  border: 1px solid black;
+  resize: none;
+  margin: 1px !important
+
+}
+
+input#grade{
+width: 70px;
+color: white;
+background-color: #181717;
+border: 1px solid black;
+margin: 1px !important;
+margin-bottom: -10px !important;
+}
+
+input#submit{
+  color: white;
+background-color: #181717;
+border: 1px solid black;
+width: 75px;
+height: 25px;
+margin: 0px !important;
+}
+
+#comment{
+  border-bottom: 1px solid #292929;
+}
+
+.userAvatar{
+  margin-top: 17px;
+  margin-right: 10px;
+border-radius: 100%;
+width: 55px;
+height: 55px;
+background-size: cover;
+    background-position: center;
+}
+h2 {
+  font-weight: 500;
+}
+
+
+.AnimePageImage {
+  padding-top: 21px;
+  max-height: 400px;
+  max-width: 200px !important;
+}
+
+
+.fullDescription {
+  line-height: 1.7em;
+  font-size: 1.3em;
+  text-align: justify;
+  text-indent: 25px;
+}
+
+.AnimePageList {
+  font-size: 16px;
+}
+
+#AnimeListPage>li:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+#AnimePage {
+  max-width: 250px;
+  box-shadow: 0 0 10px rgb(0 0 0 / 77%);
+}
+
+.AnimePageOngoing:not(:last-child) {
+  border-bottom: 1px solid #292929;
+}
+
+.AnimePageOngoing {
+
+  padding: 10px;
+  display: flex;
+
+}
+
+.AnimePageOngoing>img {
+  width: -webkit-fill-available;
+  max-width: 60px;
+}
+
+.panel1 {
+
+  height: 49px;
+  background-color: #181818;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.671);
+  position: fixed;
+  top: 0;
+  width: -webkit-fill-available;
+  align-items: center;
+}
+
+div.panel1>ul {
+  display: flex;
+  padding: 0;
+  list-style-type: none;
+}
+
+div.panel1>ul>li:not(:last-child) {
+  margin-right: 15px;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+#Advestising{
+  text-align: center;
+  height: -webkit-fill-available !important; 
+  height: 500px !important;
+  align-items: center;
+  display: flex;
+  font-size: large;
+}
+
+.MainContainer {
+  background: #181818;
+  margin: 0 auto;
+  max-width: 1300px;
+  margin-top: 135px;
+  padding: 20px;
+  box-shadow: 0 0 10px #000;
+}
+
+.containerFlex {
+  display: flex;
+}
+
+#MainPageAbout>* {
+  width: -webkit-fill-available;
+  height: fit-content;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.767);
+}
+
+#MainPageAbout>*:not(:last-child) {
+  margin-right: 15px;
+  margin-bottom: 10px;
+}
+
+#MainPageOngoing,
+#Advestising {
+  max-width: 250px;
+}
+
+.Title {
+  background-color: #292929;
+
+  padding: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.425);
+}
+
+.MainPageAnime {
+  padding: 10px;
+  display: flex;
+}
+
+.AnimePage {
+  padding: 20px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.MainPageAnime>img {
+  width: -webkit-fill-available;
+  max-width: 60px;
+
+}
+
+#AnimeList {
+  list-style-type: none;
+  margin: 0;
+  margin-left: 5px;
+  font-size: 13px;
+  padding-left: 15px;
+}
+
+#AnimeList>li:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+
+.More {
+  text-align: center;
+  margin: 10px 0;
+
+}
+input,select{
+  width: calc(100% - 20px);
+    padding: 5px;
+    background-color: #181818;
+    border: #181818;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.425);
+    color: #fff;
+    margin: 5px auto;
+    display: block;
+}
+
+.MainPageAnime:not(:last-child) {
+  border-bottom: 1px solid #292929;
+}
+
+#AllAnimeImage {
+  max-height: 200px;
+  max-width: 130px;
+}
+
+.description {
+  line-height: 1.5;
+  margin-top: 20px;
+}
+
+.AltName {
+  color: rgba(253, 253, 253, 0.37);
+  font-size: 80%;
+}
+
+.Page {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 17px 0;
+  padding: 0 18px;
+}
+
+a:hover {
+  color: rgb(255, 0, 221) !important;
+  transition: 0.5s;
+}
+
+a {
+  transition: color 0.5s;
+}
+
+#search {
+  background-color: #181818;
+  border: 0px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.425);
+  height: 1em;
+  padding: 10px;
+  width: 760px;
+  margin-right: 75px;
+  color: white;
+}
+
+.filters{
+  background: #181818;
+    position: absolute;
+    margin-top: 1px;
+    box-shadow: 0px 0px 10px 0px #000000b5;
+    margin-left: 140px;
+}
+
+.hidden{
+  display: none;
+}
+
+
+@media (max-width: 1200px) {
+  #search {
+    width: 250px !important;
+
+  }
+
+}
+
+
+.Selector {
+  width: calc(100% - 20px);
+  padding: 5px;
+  background-color: #181818;
+  border: #181818;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.425);
+  color: #fff;
+  margin: 10px auto;
+  display: block;
+
+}
+
+h3 {
+  font-size: medium;
+  font-weight: 500;
+  margin-left: 10px;
+}
+
+.Fuuter {
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.425);
+  margin-top: 20px;
+}
+
+#Original {
+  color: #615f5f;
+}
