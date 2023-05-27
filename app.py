@@ -93,6 +93,10 @@ class Anime(db.Model):
         return arr
 
     @property
+    def getGenreIDs(self):
+        return [int(x) for x in self._genre.split(",")]
+
+    @property
     def getAvg(self):
         if not self.getReviews:
             return 0
@@ -303,9 +307,18 @@ def customRender(template_name_or_list: str | Template | List[str | Template], *
                             for agerate in db.session.execute(db.select(rate_age)).scalars()]
     result = []
     if search.validate_on_submit():
-        result = db.session.execute(db.select(Anime).filter(Anime.name.contains(search.text.data) | Anime.altName.contains(
-            search.text.data) | Anime.fullDescription.contains(search.text.data)).filter(search.status.data == Anime.status).filter(search.type.data == Anime.reliese_type).filter(search.agerate.data == Anime.ageRate)).scalars()
+        result = Anime.query.filter(Anime.name.contains(search.text.data) | Anime.altName.contains(search.text.data) | Anime.fullDescription.contains(search.text.data))
+        if search.statususe.data:
+            result = result.filter(search.status.data == Anime.status)
+        if search.typeuse.data:
+            result = result.filter(search.type.data == Anime.reliese_type)
+        if search.agerateuse.data:
+            result = result.filter(search.agerate.data == Anime.ageRate)
+        result = result.all()
         print(result)
+        if search.ganreuse.data:
+            result = list(filter(lambda x: int(search.ganre.data) in x.getGenreIDs, result))
+            print(result)
         if template_name_or_list != url_for("search"):
             return render_template("Search_page.html", search=search, searchResult=result, **context)
     return render_template(template_name_or_list, search=search, searchResult=result, **context)

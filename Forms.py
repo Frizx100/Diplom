@@ -12,7 +12,7 @@ class Registration(FlaskForm):
 class Autorization(FlaskForm):
     name = StringField("Name: ", validators=[DataRequired()])
     password = PasswordField("Password", validators=[DataRequired()])
-    remember = BooleanField("remember me ",validators=[DataRequired()])
+    remember = BooleanField("remember me ")
     submit = SubmitField("Submit")
 
 class reviewForm(FlaskForm):
@@ -22,7 +22,11 @@ class reviewForm(FlaskForm):
 
 class searchForm(FlaskForm):
     text = StringField("Поиск:")
+    ganreuse = BooleanField("")
     ganre = SelectField ("Поиск:")
+    typeuse = BooleanField("")
     type = SelectField ("Поиск:")
+    statususe = BooleanField("")
     status = SelectField ("Поиск:")
+    agerateuse = BooleanField("")
     agerate = SelectField ("Поиск:")

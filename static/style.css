@@ -330,6 +330,35 @@ a {
   color: white;
 }
 
+
+#ganreuse{
+  width: 15px;
+  margin: 0px;
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+#statususe{
+  width: 15px;
+  margin: 0px;
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+#typeuse{
+  width: 15px;
+  margin: 0px;
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+#agerateuse{
+  width: 15px;
+  margin: 0px;
+  margin-left: auto;
+  margin-right: 10px;
+}
+
 .filters{
   background: #181818;
     position: absolute;

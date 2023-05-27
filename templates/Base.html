@@ -25,19 +25,19 @@
                     <div onclick="showFilter()" style = "margin-left: 20px;">Фильтры</div>
                 </div>
                 <div class = "filters hidden" id = "filters">
-                    <h3>Жанры</h3>
+                    <h3 style = "display: flex;">Жанры {{search.ganreuse()}}</h3>
                     {{search.ganre()}}
-                    <h3>Тип</h3>
+                    <h3 style = "display: flex;">Тип {{search.typeuse()}}</h3>
                     {{search.type()}}
-                    <h3>Тип озвучки</h3>
+                    <h3 style = "display: flex;">Тип озвучки</h3>
                     <select class="Selector">
                         <option value="value1">Anilibria</option>
                         <option value="value2" selected>Ancord</option>
                         <option value="value3">Studio Band</option>
                     </select>
-                    <h3>Статус</h3>
+                    <h3 style = "display: flex;">Статус {{search.statususe()}}</h3>
                     {{search.status()}}
-                    <h3>Возрастное ограничение</h1>
+                    <h3 style = "display: flex;">Возрастное ограничение {{search.agerateuse()}}</h1>
                     {{search.agerate()}}
                 </div>
                 <script>
