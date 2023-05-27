@@ -63,6 +63,12 @@ class Anime(db.Model):
     ageRate = db.Column(db.Integer, db.ForeignKey('rate_age.id'))
 
 
+
+    @property
+    def getAgeRate(self):
+        return rate_age.query.get(self.ageRate).rate
+
+
     @property
     def getReviews(self):
         return Review.query.filter_by(anime=self.id).all()
@@ -267,6 +273,18 @@ def detail_anime(id):
         db.session.commit()
 
     return customRender("animePage.html", anime=anime, Ongoing=ongoing, Status=status, form=form, review=review)
+
+
+@app.route("/All_Ongoing`s", methods = ["GET","POST"])
+def moreOngoing():
+    anime = db.session.execute(
+        db.select(Anime).filter(Anime.status == 3)).all()
+    genre = db.session.execute(db.select(Genre)).scalars()
+    type = db.session.execute(db.select(Type)).scalars()
+    status = db.session.execute(db.select(AnimeStatus)).scalars()
+    
+    return customRender("MoreOngoing.html",Anime=anime, Genre = genre, Type = type, Status = status)
+    
 
 
 @app.route("/Top_100_Anime", methods=["GET", "POST"])

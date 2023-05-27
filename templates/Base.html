@@ -13,8 +13,8 @@
 <body>
     <div class="panel1">
         <ul>
-            <li><a href="{{ url_for('main')}}">WatchAnime</a></li>
-            <li><a href="{{url_for('top100')}}">Топ 100 Аниме</a></li>
+            <li><a href="{{ url_for('main')}}">WatchAnime.ua</a></li>
+            <li><a href="{{url_for('top100')}}">Топ 100 Аніме</a></li>
             <li><a href="#">Каталог</a></li>
         </ul>
         <form action="" method="post">
@@ -22,10 +22,10 @@
             <div>
                 <div style = "display:flex; align-items: center; padding-right: 150px;">
                     {{ search.text() }}
-                    <div onclick="showFilter()" style = "margin-left: 20px;">Фильтры</div>
+                    <div onclick="showFilter()" style = "margin-left: 20px;">Фільтри</div>
                 </div>
                 <div class = "filters hidden" id = "filters">
-                    <h3 style = "display: flex;">Жанры {{search.ganreuse()}}</h3>
+                    <h3 style = "display: flex;">Жанри {{search.ganreuse()}}</h3>
                     {{search.ganre()}}
                     <h3 style = "display: flex;">Тип {{search.typeuse()}}</h3>
                     {{search.type()}}
@@ -37,7 +37,7 @@
                     </select>
                     <h3 style = "display: flex;">Статус {{search.statususe()}}</h3>
                     {{search.status()}}
-                    <h3 style = "display: flex;">Возрастное ограничение {{search.agerateuse()}}</h1>
+                    <h3 style = "display: flex;">Вікове обмеження {{search.agerateuse()}}</h1>
                     {{search.agerate()}}
                 </div>
                 <script>
@@ -54,13 +54,13 @@
         </form>
         {% if not current_user.is_authenticated %}
         <ul>
-            <li><a href="{{ url_for('reg')}}">Зарегестрироваться</a></li>
-            <li><a href="{{ url_for('log')}}">Войти</a></li>
+            <li><a href="{{ url_for('reg')}}">Зареєструватися</a></li>
+            <li><a href="{{ url_for('log')}}">Увійти</a></li>
         </ul>
         {% else %}
         <ul>
             <li><a href="#">{{ current_user.username }}</a></li>
-            <li><a href="{{url_for('logout')}}">Выйти</a></li>
+            <li><a href="{{url_for('logout')}}">Вийти</a></li>
         </ul>
         {% endif %}
     </div>
@@ -69,11 +69,11 @@
         {% block content %}
         {% endblock %}
         <div class="Fuuter">
-            <p>Сайт WatchAnime - является Дипломной работой студента групы КП-191 Хорошева Михаила.
+            <p>Сайт WatchAnime – є Дипломною роботою студента групи КП-191 Хорошева Михайла.
             </p>
-            <p>Дополнительной целью является распостранение культуры японской анимации.</p>
+            <p>Додатковою метою є поширення культури японської анімації.</p>
             <p id="Original">
-                ©WatchAnime 2022
+                ©WatchAnime 2022-2023і
             </p>
         </div>
     </div>

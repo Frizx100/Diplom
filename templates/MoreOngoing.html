@@ -1,0 +1,47 @@
+{% extends "Base.html" %} 
+    {% block content %}
+    <div class="containerFlex" id="MainPageAbout">
+        <div id="Advestising">
+            <p style = "margin: auto;">ТУТ МОГЛА БУТИ<br>ВАША РЕКЛАМА</p>
+        </div>
+    <div id="MainPageAnimeAll">
+        <div class="Title">Усі Онгоінги</div>
+        {% for x in Anime  %}
+        <div class="MainPageAnime">
+            <img src="{{x.Anime.image}}"
+                id="AllAnimeImage">
+            <ul id="AnimeList">
+                <li><a href="{{ url_for('detail_anime', id=x.Anime.id) }}">{{x.Anime.name}}</a></li>
+                <li class="AltName">{{x.Anime.altName}}</li>
+                <li><span><a href="#">{{x.Anime.getType.name}}</a></span> / <span><a href="#">{{x.Anime.date}}</a></span> / 
+                    {% for Genre in x.Anime.getGenre  %}
+                    <span><a href="#">{{Genre.name}}</a></span>
+                    {% endfor %}
+                </li>
+                    <li>Серій: {{x.Anime.seriesCount}}</li>
+                    <li>Оцінка: {{x.Anime.getAvg}}/10</li>
+                <li>
+                    <p class="description">{{x.Anime.description}}</p>
+                </li>
+            </ul>
+        </div>
+        {% endfor %}
+        <div class="Page">
+            <div><a href="#">1</a></div>
+            <div><a href="#">2</a></div>
+            <div><a href="#">3</a></div>
+            <div><a href="#">4</a></div>
+            <div><a href="#">5</a></div>
+            <div><a href="#">6</a></div>
+            <div><a href="#">7</a></div>
+            <div><a href="#">8</a></div>
+            <div><a href="#">9</a></div>
+            <div><a href="#">...</a></div>
+            <div><a href="#">15</a></div>
+        </div>
+    </div>
+    <div id="Advestising">
+        <p style = "margin: auto;">ТУТ МОГЛА БУТИ<br>ВАША РЕКЛАМА</p>
+    </div>
+</div>
+    {% endblock %}

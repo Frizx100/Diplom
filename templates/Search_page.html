@@ -2,24 +2,24 @@
 {% block content %}
     <div class="containerFlex" id="MainPageAbout">
         <div id="MainPageOngoing">
-            <div class="Title">Онгоинги</div>
+            <div class="Title">Онгоінги</div>
             {% for x in Ongoing  %}
             <div class="MainPageAnime">
                 <img src="{{x.image}}">
                 <ul id="AnimeList">
                     <li><a href="{{ url_for('detail_anime', id=x.id) }}">{{x.name}}</a></li>
                     <li>{{x.getType.name}}, {{x.date}}</li>
-                    <li>Серий: {{x.seriesCount}}</li>
-                    <li>Оценка: {{x.getAvg}}/10</li>
+                    <li>Серій: {{x.seriesCount}}</li>
+                    <li>Оцінка: {{x.getAvg}}/10</li>
                 </ul>
             </div>
             {% endfor %}
             <div class="More">
-                <a href="#">Больше</a>
+                <a href="{{url_for('moreOngoing')}}">Більше</a>
             </div>
         </div>
         <div id="MainPageAnimeAll">
-            <div class="Title">Завершённые Аниме</div>
+            <div class="Title">Знайдене Аніме</div>
             {% for x in searchResult  %}
             <div class="MainPageAnime">
                 <img src="{{x.image}}"
@@ -42,7 +42,7 @@
             {% endfor %}
         </div>
         <div id="Advestising">
-            <p style = "margin: auto;">ЗДЕСЬ МОГЛА БЫТЬ<br>ВАША РЕКЛАМА</p>
+            <p style = "margin: auto;">ТУТ МОГЛА БУТИ<br>ВАША РЕКЛАМА</p>
         </div>
     </div>
 {% endblock %}
