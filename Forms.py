@@ -16,8 +16,8 @@ class Autorization(FlaskForm):
     submit = SubmitField("Submit")
 
 class reviewForm(FlaskForm):
-   text = TextAreaField("Оставить отзыв: ", validators=[DataRequired()])
-   grade = IntegerField("Оценка: ", validators=[NumberRange(0, 10),DataRequired()])
+   text = TextAreaField("Залишити рецензію: ", validators=[DataRequired()])
+   grade = IntegerField("Оцінка: ", validators=[NumberRange(1, 10),DataRequired()])
    submit = SubmitField("Submit")
 
 class searchForm(FlaskForm):
@@ -30,3 +30,14 @@ class searchForm(FlaskForm):
     status = SelectField ("Поиск:")
     agerateuse = BooleanField("")
     agerate = SelectField ("Поиск:")
+
+class CheckboxForm(FlaskForm):
+    status = SelectField("")
+
+class ChangeProfileForm(FlaskForm):
+    username = StringField("Name: ", validators=[DataRequired()])
+    email = StringField("Email: ", validators=[Email(),DataRequired()])
+    avatar = StringField("Avatar:")
+    password = StringField("Password:", validators=[DataRequired()])
+    about = StringField("About:")
+    submit = SubmitField("Submit")

@@ -1,7 +1,7 @@
 from typing import Any, List
 from flask import Flask, render_template, redirect, url_for
 from jinja2 import Template
-from Forms import Registration, Autorization, reviewForm, searchForm
+from Forms import ChangeProfileForm, CheckboxForm, Registration, Autorization, reviewForm, searchForm
 from flask_login import current_user, LoginManager, login_user, UserMixin, logout_user
 from flask_sqlalchemy import SQLAlchemy
 import datetime
@@ -39,7 +39,6 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String)
     reg_date = db.Column(db.Date, default=datetime.datetime.today)
     about = db.Column(db.String)
-    watchStatus = db.relationship('WatchStatus', backref='user')
 
     def __init__(self, username, email, password):
         self.username = username
@@ -106,7 +105,7 @@ class Anime(db.Model):
     def getAvg(self):
         if not self.getReviews:
             return 0
-        return math.floor(db.session.query(db.func.avg(Review.grade).filter(Review.anime == self.id)).scalar())
+        return round(db.session.query(db.func.avg(Review.grade).filter(Review.anime == self.id)).scalar(),1)
 
 
 class rate_age(db.Model):
@@ -124,9 +123,19 @@ class Series(db.Model):
 class CheckList(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     anime = db.Column(db.Integer, db.ForeignKey('anime.id'))
-    lastSeries = db.Column(db.String)
+    lastSeries = db.Column(db.Integer)
     status = db.Column(db.Integer, db.ForeignKey('watch_status.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
+    @property
+    def getAnime(self):
+        return Anime.query.get(self.anime)
+    
+    def __init__(self, anime, user_id, status, lastSeries=1):
+        self.anime = anime
+        self.user_id = user_id
+        self.status = status
+        self.lastSeries = lastSeries 
 
 class Genre(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -161,9 +170,6 @@ class AnimeStatus(db.Model):
 class WatchStatus(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
-    checkLists = db.relationship('CheckList', backref='watch_status')
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
 
 class Type(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -189,6 +195,14 @@ def user_loader(user_id):
     print(user_id)
     return User.query.get(user_id)
 
+
+@app.route('/Genre_page/<int:id>', methods=["GET","POST"])
+def genrePage(id):
+    anime = list(filter(lambda x: int(id) in x.getGenreIDs, Anime.query.all()))
+    ongoing = db.session.execute(
+        db.select(Anime).filter(Anime.status == 3)).scalars()
+
+    return customRender("Anime_genre_page.html", anime=anime, ongoing=ongoing)
 
 @app.route('/registration', methods=["GET", "POST"])
 def reg():
@@ -272,7 +286,20 @@ def detail_anime(id):
         db.session.flush()
         db.session.commit()
 
-    return customRender("animePage.html", anime=anime, Ongoing=ongoing, Status=status, form=form, review=review)
+    form2 = CheckboxForm()
+    form2.status.choices = [(status.id, status.name)
+                            for status in WatchStatus.query.all()]
+    if form2.validate_on_submit():
+        query = CheckList.query.filter(CheckList.user_id == current_user.id, CheckList.anime == id)
+        if  db.session.query(query.exists()).scalar():
+            status = query.first()
+            status.status=form2.status.data
+        else:
+            status=CheckList(anime = id,user_id = current_user.id,status = form2.status.data)
+            db.session.add(status)
+        db.session.commit()
+
+    return customRender("animePage.html", anime=anime, Ongoing=ongoing, Status=status, form=form, review=review, form2 = form2)
 
 
 @app.route("/All_Ongoing`s", methods = ["GET","POST"])
@@ -311,6 +338,37 @@ def search():
     status = db.session.execute(db.select(AnimeStatus)).scalars()
 
     return customRender("Search_page.html", Anime=anime, Ongoing=ongoing, Genre=genre, Type=type, Status=status)
+
+
+@app.route("/UserPage/<id>",methods = ["GET","POST"])
+def userPage(id):
+    user = User.query.get(id)
+    query = CheckList.query.filter(CheckList.user_id == user.id)
+    data = {item.name: query.filter(CheckList.status == item.id).all() for item in WatchStatus.query.all()}
+
+    return customRender("User_page.html", User=user, Data=data)
+
+
+@app.route("/UserPage/<id>/edit",methods = ["GET","POST"])
+def userPageChange(id):
+    Form = ChangeProfileForm()
+    user = User.query.get(id)
+    if Form.validate_on_submit():
+        user.username = Form.username.data
+        user.email = Form.email.data
+        user.password = Form.password.data
+        user.avatar = Form.avatar.data
+        user.about = Form.about.data
+        db.session.commit()
+        return redirect(url_for("userPage",id = user.id))
+
+    Form.avatar.data = user.avatar
+    Form.username.data = user.username
+    Form.email.data = user.email
+    Form.password.data = user.password
+    Form.about.data = user.about
+    
+    return customRender("Change_Profile.html", User=user, form=Form)
 
 
 def customRender(template_name_or_list: str | Template | List[str | Template], **context: Any):
