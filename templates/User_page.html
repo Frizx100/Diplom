@@ -1,0 +1,43 @@
+{% extends "Base.html" %}
+{% block content %}
+<div style="display: flex;">
+    <div
+        style="background-image: url({{User.avatar}}); width:128px; height: 128px; background-size: cover; background-position: center;">
+    </div>
+    <ul id="UserList">
+        <li>Нікнейм: {{User.username}}</li>
+        <li>Емейл: {{User.email}}</li>
+        <li>Дата реєстрації: {{User.reg_date}}</li>
+        <li>Опис: {{User.about}}</li>
+        {%if current_user.is_authenticated%}
+        {% if current_user.id == User.id%}
+        <a href="{{url_for('userPageChange',id = User.id)}}">Редагувати профіль</a>
+        {%endif%}
+        {%endif%}
+    </ul>
+</div>
+<div>
+    {%for (key,value) in Data.items()%}
+    <h2 id = "AnimeListH2">{{key}}</h2>
+    {%for anime in value%}
+    <div style="display: flex; font-size: 12px; margin-bottom:15px">
+        <div
+            style="background-image: url({{anime.getAnime.image}}); width:60px; height: 90px; background-size: cover; background-position: center;">
+        </div>
+        <div>
+            <ul id="AnimeList">
+                <li><a href="{{ url_for('detail_anime', id=anime.getAnime.id) }}">{{anime.getAnime.name}}</a></li>
+                <li class="AltName">{{anime.getAnime.altName}}</li>
+                <li>{{anime.getAnime.getType.name}}/{{anime.getAnime.getStatus.name}}/Серій:
+                    {{anime.getAnime.seriesCount}}</li>
+                <li>Жанри: {% for Genre in anime.getAnime.getGenre %}
+                     <span><a href="#">{{Genre.name}}</a></span>
+                    {%endfor%}
+                </li>
+            </ul>
+        </div>
+    </div>
+    {%endfor%}
+    {%endfor%}
+</div>
+{% endblock %}

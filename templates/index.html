@@ -28,9 +28,9 @@
                     <ul id="AnimeList">
                         <li><a href="{{ url_for('detail_anime', id=x.id) }}">{{x.name}}</a></li>
                         <li class="AltName">{{x.altName}}</li>
-                        <li><span><a href="#">{{x.getType.name}}</a></span> / <span><a href="#">{{x.date}}</a></span> / 
+                        <li><span><a>{{x.getType.name}}</a></span> / <span><a>{{x.date}}</a></span> / 
                             {% for Genre in x.getGenre  %}
-                            <span><a href="#">{{Genre.name}}</a></span>
+                            <span><a href="{{ url_for('genrePage', id=Genre.id) }}">{{Genre.name}}</a></span>
                             {% endfor %}
                         </li>
                             <li>Серій: {{x.seriesCount}}</li>

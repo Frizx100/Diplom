@@ -34,8 +34,9 @@
                         <span><a href="#">{{Genre.name}}</a></span>
                         {% endfor %}
                     </li>
-                        <li>Серий: {{x.Anime.seriesCount}}</li>
-                        <li>Оценка: {{x.Anime.getAvg}}/10</li>
+                        <li>Серій: {{x.Anime.seriesCount}}</li>
+                        <li>Оцінка: {{x.Anime.getAvg}}/10</li>
+                        <li>Рейтинг: {{x.Anime.getAgeRate}}</li>
                     <li>
                         <p class="description">{{x.Anime.description}}</p>
                     </li>

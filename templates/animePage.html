@@ -4,7 +4,20 @@
 
 <div class="containerFlex" id="MainPageAbout">
     <div class="AnimePage">
-        <img class="AnimePageImage" src="{{anime.image}}">
+        <div>
+            <img class="AnimePageImage" src="{{anime.image}}">
+            <form action="" method="post" id = "status_form">
+                {{ form2.csrf_token }}
+                {{form2.status}}
+                <script>
+                    var item = document.querySelector('#status_form #status');
+                console.log(item);
+                item.oninput = function() {
+                    document.getElementById("status_form").submit();
+                };
+                </script>
+            </form>
+        </div>
         <ul id="AnimeList">
             <li>
                 <h2>{{anime.name}} </h2>
@@ -85,8 +98,8 @@
                     </script>
                 </div>
                 {%else%}
-                <p>{{anime.message}}
-
+                <p>
+                    {{anime.message}}
                 </p>
                 {%endif%}
                 <div class="comment"> {%if not review%}
@@ -138,7 +151,7 @@
     <div class="containerFlex" id="comment">
         <div style="background-image: url({{review_item.getAuthor.avatar}})" class="userAvatar"></div>
         <div>
-            <p>{{review_item.getAuthor.username}}</p>
+            <a href = "{{url_for('userPage',id = review_item.getAuthor.id)}}">{{review_item.getAuthor.username}}</a>
             <p>{{review_item.text}}</p>
             <p>{{review_item.date.strftime("%m/%d/%Y, %H:%M:%S")}}</p>
         </div>
