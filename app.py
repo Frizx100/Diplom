@@ -6,8 +6,7 @@ from flask_login import current_user, LoginManager, login_user, UserMixin, logou
 from flask_sqlalchemy import SQLAlchemy
 import datetime
 import flask_migrate
-from sqlalchemy import MetaData, or_
-import math
+from sqlalchemy import MetaData
 
 convention = {
     "ix": 'ix_%(column_0_label)s',
@@ -192,7 +191,6 @@ def main():
 
 @login_manager.user_loader
 def user_loader(user_id):
-    print(user_id)
     return User.query.get(user_id)
 
 
@@ -329,10 +327,8 @@ def top100():
 
 @app.route("/Search", methods=["GET", "POST"])
 def search():
-    anime = db.session.execute(
-        db.select(Anime)).scalars()
-    ongoing = db.session.execute(
-        db.select(Anime).filter(Anime.status == 3)).scalars()
+    anime = db.session.execute(db.select(Anime)).scalars()
+    ongoing = db.session.execute(db.select(Anime).filter(Anime.status == 3)).scalars()
     genre = db.session.execute(db.select(Genre)).scalars()
     type = db.session.execute(db.select(Type)).scalars()
     status = db.session.execute(db.select(AnimeStatus)).scalars()
@@ -373,14 +369,10 @@ def userPageChange(id):
 
 def customRender(template_name_or_list: str | Template | List[str | Template], **context: Any):
     search = searchForm()
-    search.ganre.choices = [(ganre.id, ganre.name)
-                            for ganre in db.session.execute(db.select(Genre)).scalars()]
-    search.type.choices = [(type.id, type.name)
-                            for type in db.session.execute(db.select(Type)).scalars()]
-    search.status.choices = [(status.id, status.name)
-                            for status in db.session.execute(db.select(AnimeStatus)).scalars()]
-    search.agerate.choices = [(agerate.id, agerate.rate)
-                            for agerate in db.session.execute(db.select(rate_age)).scalars()]
+    search.ganre.choices = [(ganre.id, ganre.name) for ganre in db.session.execute(db.select(Genre)).scalars()]
+    search.type.choices = [(type.id, type.name) for type in db.session.execute(db.select(Type)).scalars()]
+    search.status.choices = [(status.id, status.name) for status in db.session.execute(db.select(AnimeStatus)).scalars()]
+    search.agerate.choices = [(agerate.id, agerate.rate) for agerate in db.session.execute(db.select(rate_age)).scalars()]
     result = []
     if search.validate_on_submit():
         result = Anime.query.filter(Anime.name.contains(search.text.data) | Anime.altName.contains(search.text.data) | Anime.fullDescription.contains(search.text.data))
@@ -391,14 +383,11 @@ def customRender(template_name_or_list: str | Template | List[str | Template], *
         if search.agerateuse.data:
             result = result.filter(search.agerate.data == Anime.ageRate)
         result = result.all()
-        print(result)
         if search.ganreuse.data:
             result = list(filter(lambda x: int(search.ganre.data) in x.getGenreIDs, result))
-            print(result)
         if template_name_or_list != url_for("search"):
             return render_template("Search_page.html", search=search, searchResult=result, **context)
     return render_template(template_name_or_list, search=search, searchResult=result, **context)
-
 
 if __name__ == '__main__':
     with app.app_context():
