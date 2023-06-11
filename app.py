@@ -26,7 +26,6 @@ db = SQLAlchemy(app, metadata=metadata)
 login_manager = LoginManager()
 login_manager.init_app(app)
 app.config['SECRET_KEY'] = 'a-really-really-really-really-long-secret-key'
-app.config['SERVER_NAME'] = 'WatchAnime.now'
 
 migrate = flask_migrate.Migrate(app, db, render_as_batch=True)
 
