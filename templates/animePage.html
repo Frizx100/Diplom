@@ -6,6 +6,7 @@
     <div class="AnimePage">
         <div>
             <img class="AnimePageImage" src="{{anime.image}}">
+            {% if current_user.is_authenticated %}
             <form action="" method="post" id = "status_form">
                 {{ form2.csrf_token }}
                 {{form2.status}}
@@ -17,6 +18,7 @@
                 };
                 </script>
             </form>
+            {% endif %}
         </div>
         <ul id="AnimeList">
             <li>
@@ -102,7 +104,8 @@
                     {{anime.message}}
                 </p>
                 {%endif%}
-                <div class="comment"> {%if not review%}
+                <div class="comment"> 
+                    {%if not review and current_user.is_authenticated %}
                     <form action="" method="post">
                         {{ form.csrf_token }}
                         <div>
